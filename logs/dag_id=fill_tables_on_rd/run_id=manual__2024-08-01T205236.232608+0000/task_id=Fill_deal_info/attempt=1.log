@@ -1,0 +1,113 @@
+[2024-08-01T20:52:47.967+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-08-01T20:52:48.028+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fill_tables_on_rd.Fill_deal_info manual__2024-08-01T20:52:36.232608+00:00 [queued]>
+[2024-08-01T20:52:48.046+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fill_tables_on_rd.Fill_deal_info manual__2024-08-01T20:52:36.232608+00:00 [queued]>
+[2024-08-01T20:52:48.047+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-08-01T20:52:48.075+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): Fill_deal_info> on 2024-08-01 20:52:36.232608+00:00
+[2024-08-01T20:52:48.088+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'fill_tables_on_rd', 'Fill_deal_info', 'manual__2024-08-01T20:52:36.232608+00:00', '--job-id', '746', '--raw', '--subdir', 'DAGS_FOLDER/fill_tables.py', '--cfg-path', '/tmp/tmp5sgsh2ci']
+[2024-08-01T20:52:48.094+0000] {standard_task_runner.py:91} INFO - Job 746: Subtask Fill_deal_info
+[2024-08-01T20:52:48.097+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3834) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-08-01T20:52:48.098+0000] {standard_task_runner.py:63} INFO - Started process 3837 to run task
+[2024-08-01T20:52:48.205+0000] {task_command.py:426} INFO - Running <TaskInstance: fill_tables_on_rd.Fill_deal_info manual__2024-08-01T20:52:36.232608+00:00 [running]> on host 2634975b7554
+[2024-08-01T20:52:48.534+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fill_tables_on_rd' AIRFLOW_CTX_TASK_ID='Fill_deal_info' AIRFLOW_CTX_EXECUTION_DATE='2024-08-01T20:52:36.232608+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-08-01T20:52:36.232608+00:00'
+[2024-08-01T20:52:48.537+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-08-01T20:53:03.856+0000] {local_task_job_runner.py:310} WARNING - State of this instance has been externally set to restarting. Terminating instance.
+[2024-08-01T20:53:03.892+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2024-08-01T20:53:03.916+0000] {process_utils.py:132} INFO - Sending 15 to group 3837. PIDs of all processes in the group: [3841, 4296, 3837]
+[2024-08-01T20:53:03.922+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 3837
+[2024-08-01T20:53:03.968+0000] {taskinstance.py:2611} ERROR - Received SIGTERM. Terminating subprocesses.
+[2024-08-01T20:53:04.036+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-08-01T20:53:04.267+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=4296, status='terminated', started='20:53:02') (4296) terminated with exit code None
+[2024-08-01T20:53:04.244+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/fill_tables.py", line 53, in fill_deal_info
+    spark = spark_session()
+            ^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/fill_tables.py", line 42, in spark_session
+    spark = SparkSession.builder.appName("AirflowETL").config("spark.jars", "/opt/spark/jars/postgresql-42.7.3.jar").getOrCreate()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/sql/session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 203, in __init__
+    self._do_init(
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 296, in _do_init
+    self._jsc = jsc or self._initialize_context(self._conf._jconf)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 421, in _initialize_context
+    return self._jvm.JavaSparkContext(jconf)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/java_gateway.py", line 1586, in __call__
+    answer = self._gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/socket.py", line 708, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 2613, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+[2024-08-01T20:53:04.305+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=fill_tables_on_rd, task_id=Fill_deal_info, run_id=manual__2024-08-01T20:52:36.232608+00:00, execution_date=20240801T205236, start_date=20240801T205248, end_date=20240801T205304
+[2024-08-01T20:53:04.546+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+[2024-08-01T20:53:04.554+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.567+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2024-08-01T20:53:04.576+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.581+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.583+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.586+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.588+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.601+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.602+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.605+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.615+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.628+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.633+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.635+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.636+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.637+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.638+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.639+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.646+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.648+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.649+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2024-08-01T20:53:04.707+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=3841, status='terminated', started='20:52:48') (3841) terminated with exit code None
+[2024-08-01T20:53:04.709+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=3837, status='terminated', exitcode=2, started='20:52:47') (3837) terminated with exit code 2

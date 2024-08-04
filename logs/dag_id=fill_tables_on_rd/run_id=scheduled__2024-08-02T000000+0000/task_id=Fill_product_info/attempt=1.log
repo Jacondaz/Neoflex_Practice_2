@@ -1,0 +1,62 @@
+[2024-08-03T12:39:38.384+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-08-03T12:39:38.926+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fill_tables_on_rd.Fill_product_info scheduled__2024-08-02T00:00:00+00:00 [queued]>
+[2024-08-03T12:39:38.961+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fill_tables_on_rd.Fill_product_info scheduled__2024-08-02T00:00:00+00:00 [queued]>
+[2024-08-03T12:39:38.963+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-08-03T12:39:39.070+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): Fill_product_info> on 2024-08-02 00:00:00+00:00
+[2024-08-03T12:39:39.132+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=552) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-08-03T12:39:39.139+0000] {standard_task_runner.py:63} INFO - Started process 589 to run task
+[2024-08-03T12:39:39.143+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'fill_tables_on_rd', 'Fill_product_info', 'scheduled__2024-08-02T00:00:00+00:00', '--job-id', '772', '--raw', '--subdir', 'DAGS_FOLDER/fill_tables.py', '--cfg-path', '/tmp/tmpo46cvxf0']
+[2024-08-03T12:39:39.159+0000] {standard_task_runner.py:91} INFO - Job 772: Subtask Fill_product_info
+[2024-08-03T12:39:39.399+0000] {task_command.py:426} INFO - Running <TaskInstance: fill_tables_on_rd.Fill_product_info scheduled__2024-08-02T00:00:00+00:00 [running]> on host 2634975b7554
+[2024-08-03T12:39:39.786+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fill_tables_on_rd' AIRFLOW_CTX_TASK_ID='Fill_product_info' AIRFLOW_CTX_EXECUTION_DATE='2024-08-02T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-08-02T00:00:00+00:00'
+[2024-08-03T12:39:39.801+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-08-03T12:39:46.972+0000] {local_task_job_runner.py:124} ERROR - Received SIGTERM. Terminating subprocesses
+[2024-08-03T12:39:47.132+0000] {process_utils.py:132} INFO - Sending 15 to group 589. PIDs of all processes in the group: [632, 589]
+[2024-08-03T12:39:47.135+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 589
+[2024-08-03T12:39:47.143+0000] {taskinstance.py:2611} ERROR - Received SIGTERM. Terminating subprocesses.
+[2024-08-03T12:39:47.216+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-08-03T12:39:47.391+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/fill_tables.py", line 59, in fill_product_info
+    spark = spark_session()
+            ^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/fill_tables.py", line 42, in spark_session
+    spark = SparkSession.builder.appName("AirflowETL").config("spark.jars", "/opt/spark/jars/postgresql-42.7.3.jar").getOrCreate()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/sql/session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 201, in __init__
+    SparkContext._ensure_initialized(self, gateway=gateway, conf=conf)
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 436, in _ensure_initialized
+    SparkContext._gateway = gateway or launch_gateway(conf)
+                                       ^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/java_gateway.py", line 104, in launch_gateway
+    time.sleep(0.1)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 2613, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+[2024-08-03T12:39:47.427+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=fill_tables_on_rd, task_id=Fill_product_info, run_id=scheduled__2024-08-02T00:00:00+00:00, execution_date=20240802T000000, start_date=20240803T123938, end_date=20240803T123947
+[2024-08-03T12:39:47.635+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=632, status='terminated', started='12:39:39') (632) terminated with exit code None
+[2024-08-03T12:39:47.640+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=589, status='terminated', exitcode=2, started='12:39:38') (589) terminated with exit code 2
+[2024-08-03T12:39:47.646+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 143
+[2024-08-03T12:39:47.754+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/models/baseoperator.py:1297 AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `***.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+[2024-08-03T12:39:47.946+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-08-03T12:39:49.310+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

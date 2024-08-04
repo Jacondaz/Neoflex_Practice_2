@@ -1,0 +1,57 @@
+[2024-08-01T20:52:50.383+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-08-01T20:52:50.487+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fill_tables_on_rd.Fill_product_info manual__2024-08-01T20:52:36.232608+00:00 [queued]>
+[2024-08-01T20:52:50.515+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fill_tables_on_rd.Fill_product_info manual__2024-08-01T20:52:36.232608+00:00 [queued]>
+[2024-08-01T20:52:50.516+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-08-01T20:52:50.547+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): Fill_product_info> on 2024-08-01 20:52:36.232608+00:00
+[2024-08-01T20:52:50.559+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'fill_tables_on_rd', 'Fill_product_info', 'manual__2024-08-01T20:52:36.232608+00:00', '--job-id', '751', '--raw', '--subdir', 'DAGS_FOLDER/fill_tables.py', '--cfg-path', '/tmp/tmpjw52rkhl']
+[2024-08-01T20:52:50.563+0000] {standard_task_runner.py:91} INFO - Job 751: Subtask Fill_product_info
+[2024-08-01T20:52:50.566+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3874) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-08-01T20:52:50.568+0000] {standard_task_runner.py:63} INFO - Started process 3902 to run task
+[2024-08-01T20:52:50.658+0000] {task_command.py:426} INFO - Running <TaskInstance: fill_tables_on_rd.Fill_product_info manual__2024-08-01T20:52:36.232608+00:00 [running]> on host 2634975b7554
+[2024-08-01T20:52:50.819+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fill_tables_on_rd' AIRFLOW_CTX_TASK_ID='Fill_product_info' AIRFLOW_CTX_EXECUTION_DATE='2024-08-01T20:52:36.232608+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-08-01T20:52:36.232608+00:00'
+[2024-08-01T20:52:50.823+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-08-01T20:53:11.043+0000] {local_task_job_runner.py:310} WARNING - State of this instance has been externally set to restarting. Terminating instance.
+[2024-08-01T20:53:11.046+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2024-08-01T20:53:11.053+0000] {process_utils.py:132} INFO - Sending 15 to group 3902. PIDs of all processes in the group: [3947, 3902]
+[2024-08-01T20:53:11.056+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 3902
+[2024-08-01T20:53:11.057+0000] {taskinstance.py:2611} ERROR - Received SIGTERM. Terminating subprocesses.
+[2024-08-01T20:53:11.058+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-08-01T20:53:11.121+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/fill_tables.py", line 61, in fill_product_info
+    df.write.jdbc(url=postgres_uri, table='rd.product', mode='append', properties=properties)
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/sql/readwriter.py", line 1984, in jdbc
+    self.mode(mode)._jwrite.jdbc(url, table, jprop)
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/socket.py", line 708, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 2613, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+[2024-08-01T20:53:11.141+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=fill_tables_on_rd, task_id=Fill_product_info, run_id=manual__2024-08-01T20:52:36.232608+00:00, execution_date=20240801T205236, start_date=20240801T205250, end_date=20240801T205311
+[2024-08-01T20:53:11.231+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=3902, status='terminated', exitcode=2, started='20:52:50') (3902) terminated with exit code 2
+[2024-08-01T20:53:11.686+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=3947, status='terminated', started='20:52:50') (3947) terminated with exit code None

@@ -1,0 +1,52 @@
+[2024-08-01T15:14:49.142+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-08-01T15:14:49.241+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fill_tables_on_rd.Fill_deal_info manual__2024-08-01T15:06:51.553068+00:00 [queued]>
+[2024-08-01T15:14:49.255+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fill_tables_on_rd.Fill_deal_info manual__2024-08-01T15:06:51.553068+00:00 [queued]>
+[2024-08-01T15:14:49.256+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-08-01T15:14:49.273+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): Fill_deal_info> on 2024-08-01 15:06:51.553068+00:00
+[2024-08-01T15:14:49.282+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'fill_tables_on_rd', 'Fill_deal_info', 'manual__2024-08-01T15:06:51.553068+00:00', '--job-id', '738', '--raw', '--subdir', 'DAGS_FOLDER/fill_tables.py', '--cfg-path', '/tmp/tmpbibpvv_d']
+[2024-08-01T15:14:49.285+0000] {standard_task_runner.py:91} INFO - Job 738: Subtask Fill_deal_info
+[2024-08-01T15:14:49.286+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1867) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-08-01T15:14:49.287+0000] {standard_task_runner.py:63} INFO - Started process 1868 to run task
+[2024-08-01T15:14:49.354+0000] {task_command.py:426} INFO - Running <TaskInstance: fill_tables_on_rd.Fill_deal_info manual__2024-08-01T15:06:51.553068+00:00 [running]> on host 2634975b7554
+[2024-08-01T15:14:49.536+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fill_tables_on_rd' AIRFLOW_CTX_TASK_ID='Fill_deal_info' AIRFLOW_CTX_EXECUTION_DATE='2024-08-01T15:06:51.553068+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-08-01T15:06:51.553068+00:00'
+[2024-08-01T15:14:49.537+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-08-01T15:14:59.258+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-08-01T15:14:59.260+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/fill_tables.py", line 55, in fill_deal_info
+    df = spark.read.csv('/opt/airflow/files/deal_info.csv', sep=',', header=True, schema=schema_deal_info)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/sql/readwriter.py", line 701, in csv
+    self._set_opts(
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/sql/readwriter.py", line 51, in _set_opts
+    self.schema(schema)  # type: ignore[attr-defined]
+    ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/sql/readwriter.py", line 152, in schema
+    jschema = spark._jsparkSession.parseDataType(schema.json())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.IllegalArgumentException: Failed to convert the JSON string 'data' to a data type.
+[2024-08-01T15:14:59.352+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=fill_tables_on_rd, task_id=Fill_deal_info, run_id=manual__2024-08-01T15:06:51.553068+00:00, execution_date=20240801T150651, start_date=20240801T151449, end_date=20240801T151459
+[2024-08-01T15:14:59.398+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 738 for task Fill_deal_info (Failed to convert the JSON string 'data' to a data type.; 1868)
+[2024-08-01T15:14:59.425+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-08-01T15:14:59.464+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-08-01T15:14:59.472+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
